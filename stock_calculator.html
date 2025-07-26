@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,23 +16,23 @@
     }
 
     :root {
-      --primary: #00695C;
-      --primary-dark: #004D40;
-      --primary-light: #4DB6AC;
-      --secondary: #0288D1;
-      --accent: #FF9800;
-      --profit: #4CAF50;
-      --loss: #F44336;
-      --light: #F5F5F5;
-      --dark: #263238;
-      --gray: #607D8B;
+      --primary: #4a4e69;
+      --primary-dark: #22223b;
+      --primary-light: #9a8c98;
+      --secondary: #c9ada7;
+      --accent: #f2e9e4;
+      --profit: #4caf50;
+      --loss: #f44336;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --gray: #6c757d;
       --border-radius: 16px;
       --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
       --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
 
     body {
-      background: linear-gradient(135deg, #e0f7fa, #f1f8e9);
+      background: linear-gradient(135deg, #e9ecef, #dee2e6);
       color: var(--dark);
       line-height: 1.6;
       min-height: 100vh;
@@ -48,7 +49,7 @@
     header {
       text-align: center;
       padding: 40px 20px 20px;
-      background: linear-gradient(145deg, #00695C, #0288D1);
+      background: linear-gradient(145deg, var(--primary-dark), var(--primary));
       border-radius: 0 0 var(--border-radius) var(--border-radius);
       color: white;
       margin-bottom: 40px;
@@ -110,7 +111,7 @@
 
     .nav-button:hover {
       transform: translateY(-3px);
-      box-shadow: 0 7px 15px rgba(0, 105, 92, 0.2);
+      box-shadow: 0 7px 15px rgba(74, 78, 105, 0.3);
       background: var(--primary);
       color: white;
     }
@@ -134,6 +135,18 @@
       border-radius: var(--border-radius);
       padding: 30px;
       box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(to right, var(--primary), var(--secondary));
     }
 
     .section-title {
@@ -153,6 +166,7 @@
 
     .form-group {
       margin-bottom: 20px;
+      position: relative;
     }
 
     label {
@@ -187,7 +201,14 @@
     input:focus {
       border-color: var(--primary);
       outline: none;
-      box-shadow: 0 0 0 4px rgba(0, 105, 92, 0.2);
+      box-shadow: 0 0 0 4px rgba(74, 78, 105, 0.2);
+    }
+
+    input[readonly] {
+      background-color: #f8f9fa;
+      border-color: #dee2e6;
+      color: #495057;
+      cursor: not-allowed;
     }
 
     .buttons {
@@ -219,7 +240,7 @@
 
     button.primary:hover {
       transform: translateY(-3px);
-      box-shadow: 0 7px 14px rgba(0, 105, 92, 0.3);
+      box-shadow: 0 7px 14px rgba(74, 78, 105, 0.3);
     }
 
     button.secondary {
@@ -229,7 +250,7 @@
     }
 
     button.secondary:hover {
-      background: rgba(0, 113, 95, 0.05);
+      background: rgba(74, 78, 105, 0.05);
       transform: translateY(-3px);
     }
 
@@ -242,6 +263,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 30px;
+      border-top: 5px solid var(--secondary);
     }
     
     @media (max-width: 768px) {
@@ -291,11 +313,12 @@
     }
     
     .roi-value {
-      background: var(--light);
+      background: var(--accent);
       padding: 12px 25px;
       border-radius: 30px;
       font-weight: 700;
       font-size: 1.3rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
     }
 
     .summary-right {
@@ -330,8 +353,8 @@
     }
 
     .disclaimer {
-      background: rgba(255, 152, 0, 0.1);
-      border-left: 4px solid var(--accent);
+      background: rgba(201, 173, 167, 0.2);
+      border-left: 4px solid var(--secondary);
       padding: 20px;
       border-radius: 12px;
       margin-top: 20px;
@@ -339,7 +362,7 @@
     }
 
     .disclaimer h3 {
-      color: var(--accent);
+      color: var(--primary);
       margin-bottom: 10px;
       display: flex;
       align-items: center;
@@ -386,6 +409,32 @@
       margin-top: 30px;
       padding-top: 20px;
       border-top: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .reset-section {
+      text-align: center;
+      margin: 20px 0 40px;
+    }
+
+    .reset-button {
+      padding: 14px 35px;
+      background: linear-gradient(135deg, var(--secondary), var(--primary-light));
+      color: white;
+      border: none;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .reset-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 7px 15px rgba(154, 140, 152, 0.3);
     }
 
     /* Responsive Design */
@@ -562,6 +611,12 @@
       </div>
     </div>
     
+    <div class="reset-section">
+      <button class="reset-button" id="reset-btn">
+        <i class="fas fa-redo"></i> Reset All Values
+      </button>
+    </div>
+    
     <div class="summary">
       <div class="summary-left">
         <h2 class="summary-title">Profit/Loss Summary</h2>
@@ -610,10 +665,76 @@
     // Chart instance
     let roiChart = null;
     
+    // Initialize calculator
+    function initCalculator() {
+      // Set all calculated fields to read-only and empty
+      const calculatedFields = [
+        'buyGross', 'buyIDS', 'buyRMS', 'buyBroker', 'buySalesTax', 'buyDSS', 
+        'buyTotalFee', 'buyTotalCost', 'buyActualRate', 'sellGross', 'sellIDS', 
+        'sellRMS', 'sellBroker', 'sellSalesTax', 'capitalGain', 'sellTotalFee', 
+        'sellNetAmount', 'netPL'
+      ];
+      
+      calculatedFields.forEach(id => {
+        const field = document.getElementById(id);
+        field.readOnly = true;
+        field.value = '';
+      });
+      
+      // Reset summary values
+      document.getElementById("netPLSummary").textContent = '₨ 0.00';
+      document.getElementById("roiPercentage").textContent = '0.00%';
+      document.getElementById("roiValue").textContent = 'ROI: 0.00%';
+      document.getElementById("chartValue").textContent = '0.00%';
+      
+      // Destroy existing chart if it exists
+      if (roiChart) {
+        roiChart.destroy();
+        roiChart = null;
+      }
+      
+      // Initialize chart with empty state
+      const ctx = document.getElementById('roiChart').getContext('2d');
+      roiChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          datasets: [{
+            data: [0, 100],
+            backgroundColor: ['#e0e0e0', '#f8f9fa'],
+            borderWidth: 0,
+            circumference: 360
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          cutout: '70%',
+          plugins: {
+            legend: {
+              display: false
+            },
+            tooltip: {
+              enabled: false
+            }
+          },
+          animation: {
+            animateRotate: true,
+            animateScale: true
+          }
+        }
+      });
+    }
+    
     // Calculate buy costs
     function calculateBuy() {
       const qty = parseFloat(document.getElementById("buyQty").value);
       const rate = parseFloat(document.getElementById("buyRate").value);
+      
+      if (!qty || !rate) {
+        alert("Please enter valid quantity and buy rate");
+        return;
+      }
+      
       const gross = qty * rate;
       const ids = 1.61;
       const rms = 0.32;
@@ -643,6 +764,17 @@
       const rate = parseFloat(document.getElementById("sellRate").value);
       const buyRate = parseFloat(document.getElementById("buyRate").value);
       const buyTotalCost = parseFloat(document.getElementById("buyTotalCost").value) || 0;
+      
+      if (!qty || !rate) {
+        alert("Please enter valid quantity and sell rate");
+        return;
+      }
+      
+      if (!buyTotalCost) {
+        alert("Please calculate buy costs first");
+        return;
+      }
+      
       const gross = qty * rate;
       const ids = 1.65;
       const rms = 0.33;
@@ -674,6 +806,12 @@
       document.getElementById("roiPercentage").textContent = roiPercentage.toFixed(2) + '%';
       document.getElementById("roiValue").textContent = 'ROI: ' + roiPercentage.toFixed(2) + '%';
       document.getElementById("chartValue").textContent = roiPercentage.toFixed(2) + '%';
+      
+      // Set text color based on profit/loss
+      const color = netPL >= 0 ? 'var(--profit)' : 'var(--loss)';
+      document.getElementById("chartValue").style.color = color;
+      document.getElementById("roiPercentage").style.color = color;
+      document.getElementById("netPLSummary").style.color = color;
       
       // Update ROI chart
       updateRoiChart(roiPercentage, netPL);
@@ -723,49 +861,31 @@
           }
         }
       });
-      
-      // Set text color based on profit/loss
-      document.getElementById("chartValue").style.color = netPL >= 0 ? '#4CAF50' : '#F44336';
-      document.getElementById("roiPercentage").style.color = netPL >= 0 ? '#4CAF50' : '#F44336';
-      document.getElementById("netPLSummary").style.color = netPL >= 0 ? '#4CAF50' : '#F44336';
     }
 
     // Initialize event listeners
     document.getElementById("calculate-buy-btn").addEventListener("click", function() {
       calculateBuy();
-      calculateSell();
     });
     
     document.getElementById("calculate-sell-btn").addEventListener("click", function() {
       calculateSell();
     });
-
-    // Input event listeners for real-time updates
-    document.getElementById("buyQty").addEventListener("input", function() {
-      document.getElementById("sellQty").value = this.value;
-      calculateBuy();
-      calculateSell();
-    });
     
-    document.getElementById("buyRate").addEventListener("input", function() {
-      calculateBuy();
-      calculateSell();
-    });
-    
-    document.getElementById("sellQty").addEventListener("input", function() {
-      document.getElementById("buyQty").value = this.value;
-      calculateBuy();
-      calculateSell();
-    });
-    
-    document.getElementById("sellRate").addEventListener("input", function() {
-      calculateSell();
+    document.getElementById("reset-btn").addEventListener("click", function() {
+      // Clear input fields
+      document.getElementById("buyQty").value = "";
+      document.getElementById("buyRate").value = "";
+      document.getElementById("sellQty").value = "";
+      document.getElementById("sellRate").value = "";
+      
+      // Reset calculator state
+      initCalculator();
     });
 
-    // Initial calculations
+    // Initialize calculator on page load
     window.onload = function() {
-      calculateBuy();
-      calculateSell();
+      initCalculator();
     };
   </script>
 </body>
