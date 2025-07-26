@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SIP Calculator | Pakistan</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    :root {
+      --primary: #00695C;
+      --primary-dark: #004D40;
+      --primary-light: #4DB6AC;
+      --secondary: #0288D1;
+      --accent: #FF9800;
+      --light: #F5F5F5;
+      --dark: #263238;
+      --gray: #607D8B;
+      --border-radius: 16px;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    body {
+      background: linear-gradient(135deg, #e0f7fa, #f1f8e9);
+      color: var(--dark);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* Header Styles */
+    header {
+      text-align: center;
+      padding: 40px 20px 20px;
+      background: linear-gradient(145deg, #00695C, #0288D1);
+      border-radius: 0 0 var(--border-radius) var(--border-radius);
+      color: white;
+      margin-bottom: 40px;
+      box-shadow: var(--shadow);
+    }
+
+    .logo-container {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 90px;
+      height: 90px;
+      background: white;
+      border-radius: 50%;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .logo-container i {
+      font-size: 3rem;
+      color: var(--primary);
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
+    .subtitle {
+      font-size: 1.2rem;
+      max-width: 700px;
+      margin: 0 auto;
+      opacity: 0.9;
+    }
+
+    /* Navigation */
+    .nav-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 30px;
+      flex-wrap: wrap;
+    }
+
+    .nav-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 25px;
+      background: white;
+      color: var(--primary);
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 600;
+      transition: var(--transition);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 7px 15px rgba(0, 105, 92, 0.2);
+      background: var(--primary);
+      color: white;
+    }
+
+    /* Calculator Styles */
+    .calculator-card {
+      background: white;
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+
+    .input-section {
+      flex: 1;
+      min-width: 320px;
+      padding: 40px;
+      background: linear-gradient(145deg, #f8f9fa, #ffffff);
+      border-right: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .results-section {
+      flex: 1;
+      min-width: 320px;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.5rem;
+      color: var(--primary-dark);
+      margin-bottom: 30px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid var(--primary-light);
+    }
+
+    .section-title i {
+      color: var(--primary);
+    }
+
+    .form-group {
+      margin-bottom: 30px;
+      position: relative;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 12px;
+      font-weight: 600;
+      color: var(--dark);
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    label i {
+      color: var(--primary);
+      width: 24px;
+      text-align: center;
+    }
+
+    .input-with-icon {
+      position: relative;
+    }
+
+    .input-with-icon i {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--primary);
+      font-size: 1.2rem;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 16px 20px 16px 55px;
+      border: 2px solid #e0e0e0;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      transition: var(--transition);
+      background: white;
+      color: var(--dark);
+      font-weight: 500;
+    }
+
+    input:focus, select:focus {
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(0, 105, 92, 0.2);
+    }
+
+    .range-container {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    .range-container input[type="range"] {
+      flex: 1;
+      padding: 0;
+      -webkit-appearance: none;
+      height: 10px;
+      border-radius: 10px;
+      background: linear-gradient(to right, var(--primary-light), var(--primary));
+      outline: none;
+    }
+
+    .range-container input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: white;
+      border: 3px solid var(--primary);
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .range-container input[type="range"]::-webkit-slider-thumb:hover {
+      transform: scale(1.15);
+      background: var(--primary-light);
+    }
+
+    .range-value {
+      min-width: 70px;
+      text-align: center;
+      font-weight: 700;
+      color: white;
+      background: var(--primary);
+      padding: 8px 15px;
+      border-radius: 30px;
+      font-size: 1rem;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    button {
+      flex: 1;
+      padding: 18px;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    button.primary {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+    }
+
+    button.primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 7px 14px rgba(0, 105, 92, 0.3);
+    }
+
+    button.secondary {
+      background: white;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+    }
+
+    button.secondary:hover {
+      background: rgba(0, 113, 95, 0.05);
+      transform: translateY(-3px);
+    }
+
+    .summary-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 25px;
+      margin-bottom: 40px;
+    }
+
+    .card {
+      background: white;
+      border-radius: var(--border-radius);
+      padding: 25px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      border-top: 5px solid var(--primary);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .card h3 {
+      font-size: 1.2rem;
+      color: var(--gray);
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+
+    .card .amount {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      margin-top: auto;
+      line-height: 1.3;
+    }
+
+    .card .subtext {
+      color: var(--gray);
+      font-size: 0.95rem;
+      margin-top: 8px;
+    }
+
+    .chart-container {
+      flex: 1;
+      background: white;
+      border-radius: var(--border-radius);
+      padding: 30px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chart-container h2 {
+      margin-bottom: 25px;
+      color: var(--primary);
+      font-size: 1.6rem;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .chart-wrapper {
+      position: relative;
+      flex: 1;
+      min-height: 300px;
+    }
+
+    .disclaimer {
+      background: rgba(255, 152, 0, 0.1);
+      border-left: 4px solid var(--accent);
+      padding: 20px;
+      border-radius: 12px;
+      margin-top: 20px;
+      font-size: 1rem;
+    }
+
+    .disclaimer h3 {
+      color: var(--accent);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    footer {
+      background: linear-gradient(to right, var(--primary-dark), var(--primary));
+      color: white;
+      padding: 40px 20px;
+      border-radius: var(--border-radius) var(--border-radius) 0 0;
+      text-align: center;
+    }
+
+    .footer-content {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin: 30px 0;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .footer-links a:hover {
+      color: var(--accent);
+      transform: translateY(-3px);
+    }
+
+    .copyright {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 900px) {
+      .calculator-card {
+        flex-direction: column;
+      }
+      
+      .input-section {
+        border-right: none;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .input-section, .results-section {
+        padding: 30px 20px;
+      }
+      
+      h1 {
+        font-size: 2rem;
+      }
+      
+      .section-title {
+        font-size: 1.3rem;
+      }
+      
+      .buttons {
+        flex-direction: column;
+      }
+      
+      .summary-cards {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo-container">
+      <i class="fas fa-chart-line"></i>
+    </div>
+    <h1>SIP Investment Calculator</h1>
+    <p class="subtitle">Plan your financial future with systematic investments</p>
+    
+    <div class="nav-buttons">
+      <a href="index.html" class="nav-button">
+        <i class="fas fa-home"></i> Home
+      </a>
+      <a href="inflation_calculator.html" class="nav-button">
+        <i class="fas fa-money-bill-wave"></i> Inflation Calculator
+      </a>
+      <a href="stock_calculator.html" class="nav-button">
+        <i class="fas fa-chart-candlestick"></i> Stock Calculator
+      </a>
+    </div>
+  </header>
+  
+  <div class="container">
+    <div class="calculator-card">
+      <div class="input-section">
+        <h2 class="section-title"><i class="fas fa-sliders-h"></i> Investment Parameters</h2>
+        
+        <div class="form-group">
+          <label for="investment-type"><i class="fas fa-chart-pie"></i> Investment Type</label>
+          <select id="investment-type">
+            <option value="sip">SIP (Systematic Investment Plan)</option>
+            <option value="lumpsum">Lump Sum Investment</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="currency"><i class="fas fa-globe"></i> Currency</label>
+          <select id="currency">
+            <option value="PKR">Pakistani Rupee (PKR) - ₨</option>
+            <option value="USD">US Dollar (USD) - $</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="monthly-investment"><i class="fas fa-coins"></i> Investment Amount</label>
+          <div class="input-with-icon">
+            <i class="fas fa-rupee-sign"></i>
+            <input type="number" id="monthly-investment" value="15000" min="500" step="500">
+          </div>
+          <div class="range-container">
+            <input type="range" id="investment-range" min="500" max="500000" value="15000" step="500">
+            <span class="range-value" id="investment-value">₨ 15,000</span>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="rate-of-return"><i class="fas fa-percentage"></i> Expected Rate of Return</label>
+          <div class="input-with-icon">
+            <i class="fas fa-chart-line"></i>
+            <input type="number" id="rate-of-return" value="14" min="1" max="30" step="0.5">
+          </div>
+          <div class="range-container">
+            <input type="range" id="rate-range" min="1" max="30" value="14" step="0.5">
+            <span class="range-value" id="rate-value">14%</span>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="investment-duration"><i class="fas fa-calendar"></i> Investment Duration</label>
+          <div class="input-with-icon">
+            <i class="fas fa-clock"></i>
+            <input type="number" id="investment-duration" value="12" min="1" max="30" step="1">
+          </div>
+          <div class="range-container">
+            <input type="range" id="duration-range" min="1" max="30" value="12" step="1">
+            <span class="range-value" id="duration-value">12 years</span>
+          </div>
+        </div>
+        
+        <div class="buttons">
+          <button class="primary" id="calculate-btn">
+            <i class="fas fa-calculator"></i> Calculate Returns
+          </button>
+          <button class="secondary" id="reset-btn">
+            <i class="fas fa-redo"></i> Reset Values
+          </button>
+        </div>
+      </div>
+      
+      <div class="results-section">
+        <h2 class="section-title"><i class="fas fa-chart-bar"></i> Investment Results</h2>
+        
+        <div class="summary-cards">
+          <div class="card">
+            <h3>Total Investment</h3>
+            <div class="amount" id="investment-amount">₨ 2,160,000</div>
+            <div class="subtext">Amount you invested</div>
+          </div>
+          <div class="card">
+            <h3>Estimated Returns</h3>
+            <div class="amount" id="return-amount">₨ 5,827,476</div>
+            <div class="subtext">Profit on your investment</div>
+          </div>
+          <div class="card">
+            <h3>Total Value</h3>
+            <div class="amount" id="result-amount">₨ 7,987,476</div>
+            <div class="subtext">Final maturity amount</div>
+          </div>
+        </div>
+        
+        <div class="chart-container">
+          <h2><i class="fas fa-chart-pie"></i> Investment Breakdown</h2>
+          <div class="chart-wrapper">
+            <canvas id="investmentChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="disclaimer">
+      <h3><i class="fas fa-exclamation-triangle"></i> Investment Disclaimer</h3>
+      <p>This calculator provides estimates only. Actual returns may vary based on market conditions, fund performance, and other factors. Past performance is not indicative of future results. SIP investments are subject to market risks. Please consult with a certified financial advisor before making investment decisions.</p>
+    </div>
+  </div>
+  
+  <footer>
+    <div class="footer-content">
+      <div class="footer-links">
+        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+        <a href="sip_calculator.html"><i class="fas fa-chart-line"></i> SIP Calculator</a>
+        <a href="inflation_calculator.html"><i class="fas fa-money-bill-wave"></i> Inflation Calculator</a>
+        <a href="stock_calculator.html"><i class="fas fa-chart-candlestick"></i> Stock Calculator</a>
+      </div>
+      
+      <div class="copyright">
+        <p>© 2023 Financial Calculators Pakistan. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // DOM Elements
+    const investmentInput = document.getElementById("monthly-investment");
+    const investmentRange = document.getElementById("investment-range");
+    const investmentValue = document.getElementById("investment-value");
+    const rateInput = document.getElementById("rate-of-return");
+    const rateRange = document.getElementById("rate-range");
+    const rateValue = document.getElementById("rate-value");
+    const durationInput = document.getElementById("investment-duration");
+    const durationRange = document.getElementById("duration-range");
+    const durationValue = document.getElementById("duration-value");
+    const typeSelect = document.getElementById("investment-type");
+    const currencySelect = document.getElementById("currency");
+    const calculateBtn = document.getElementById("calculate-btn");
+    const resetBtn = document.getElementById("reset-btn");
+    
+    let investmentChart = null;
+    
+    // Format currency
+    function formatCurrency(amount, currency) {
+      if (currency === 'PKR') {
+        return '₨ ' + Math.round(amount).toLocaleString('en-PK');
+      } else {
+        return '$ ' + Math.round(amount).toLocaleString('en-US');
+      }
+    }
+    
+    // Initialize range sliders
+    function initRangeSliders() {
+      // Investment range
+      investmentRange.value = investmentInput.value;
+      investmentValue.textContent = formatCurrency(investmentInput.value, 'PKR');
+      
+      investmentInput.addEventListener('input', function() {
+        investmentRange.value = this.value;
+        investmentValue.textContent = formatCurrency(this.value, currencySelect.value);
+      });
+      
+      investmentRange.addEventListener('input', function() {
+        investmentInput.value = this.value;
+        investmentValue.textContent = formatCurrency(this.value, currencySelect.value);
+      });
+      
+      // Rate range
+      rateRange.value = rateInput.value;
+      rateValue.textContent = rateInput.value + '%';
+      
+      rateInput.addEventListener('input', function() {
+        rateRange.value = this.value;
+        rateValue.textContent = this.value + '%';
+      });
+      
+      rateRange.addEventListener('input', function() {
+        rateInput.value = this.value;
+        rateValue.textContent = this.value + '%';
+      });
+      
+      // Duration range
+      durationRange.value = durationInput.value;
+      durationValue.textContent = durationInput.value + ' years';
+      
+      durationInput.addEventListener('input', function() {
+        durationRange.value = this.value;
+        durationValue.textContent = this.value + ' years';
+      });
+      
+      durationRange.addEventListener('input', function() {
+        durationInput.value = this.value;
+        durationValue.textContent = this.value + ' years';
+      });
+      
+      // Currency change
+      currencySelect.addEventListener('change', function() {
+        calculate();
+      });
+    }
+    
+    // Calculate investment returns
+    function calculate() {
+      const investment = parseFloat(investmentInput.value);
+      const rate = parseFloat(rateInput.value) / 100;
+      const years = parseInt(durationInput.value);
+      const type = typeSelect.value;
+      const currency = currencySelect.value;
+      
+      let totalInvestment, futureValue;
+      
+      if (type === "sip") {
+        // Monthly SIP calculation
+        totalInvestment = investment * 12 * years;
+        const monthlyRate = rate / 12;
+        const months = years * 12;
+        futureValue = investment * ((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate) * (1 + monthlyRate);
+      } else {
+        // Lump sum calculation
+        totalInvestment = investment;
+        futureValue = investment * Math.pow(1 + rate, years);
+      }
+      
+      const returns = futureValue - totalInvestment;
+      
+      // Update UI
+      document.getElementById("investment-amount").textContent = formatCurrency(totalInvestment, currency);
+      document.getElementById("return-amount").textContent = formatCurrency(returns, currency);
+      document.getElementById("result-amount").textContent = formatCurrency(futureValue, currency);
+      
+      // Update sliders display
+      investmentValue.textContent = formatCurrency(investmentInput.value, currency);
+      
+      // Update chart
+      updateChart(totalInvestment, returns, currency);
+    }
+    
+    // Update the chart
+    function updateChart(investment, returns, currency) {
+      const ctx = document.getElementById('investmentChart').getContext('2d');
+      const currencySymbol = currency === 'PKR' ? '₨' : '$';
+      
+      if (investmentChart) {
+        investmentChart.destroy();
+      }
+      
+      investmentChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: [
+            `Investment (${currencySymbol}${Math.round(investment).toLocaleString()})`, 
+            `Returns (${currencySymbol}${Math.round(returns).toLocaleString()})`
+          ],
+          datasets: [{
+            data: [investment, returns],
+            backgroundColor: [
+              '#00695C',
+              '#0288D1'
+            ],
+            borderWidth: 0,
+            hoverOffset: 20
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: {
+                padding: 25,
+                font: {
+                  size: 14,
+                  family: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"
+                },
+                usePointStyle: true,
+                pointStyle: 'circle'
+              }
+            },
+            tooltip: {
+              backgroundColor: 'rgba(0, 0, 0, 0.8)',
+              titleFont: {
+                size: 16
+              },
+              bodyFont: {
+                size: 14
+              },
+              padding: 12,
+              displayColors: false,
+              callbacks: {
+                label: function(context) {
+                  const value = context.parsed;
+                  const percentage = Math.round((value / (investment + returns)) * 100);
+                  return `${context.label}: ${currencySymbol}${value.toLocaleString()} (${percentage}%)`;
+                }
+              }
+            }
+          },
+          cutout: '65%',
+          animation: {
+            animateScale: true,
+            animateRotate: true
+          }
+        }
+      });
+    }
+    
+    // Reset calculator
+    function resetCalculator() {
+      investmentInput.value = 15000;
+      rateInput.value = 14;
+      durationInput.value = 12;
+      typeSelect.value = 'sip';
+      currencySelect.value = 'PKR';
+      
+      // Update sliders
+      investmentRange.value = 15000;
+      rateRange.value = 14;
+      durationRange.value = 12;
+      
+      // Update display values
+      investmentValue.textContent = formatCurrency(15000, 'PKR');
+      rateValue.textContent = '14%';
+      durationValue.textContent = '12 years';
+      
+      calculate();
+    }
+    
+    // Event Listeners
+    calculateBtn.addEventListener('click', calculate);
+    resetBtn.addEventListener('click', resetCalculator);
+    
+    // Initialize when page loads
+    window.onload = function() {
+      initRangeSliders();
+      calculate();
+    };
+  </script>
+</body>
+</html>

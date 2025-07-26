@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Financial Calculators | Pakistan</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    :root {
+      --primary: #00695C;
+      --primary-dark: #004D40;
+      --primary-light: #4DB6AC;
+      --secondary: #0288D1;
+      --accent: #FF9800;
+      --light: #F5F5F5;
+      --dark: #263238;
+      --success: #388E3C;
+      --warning: #F57C00;
+      --danger: #D32F2F;
+      --gray: #607D8B;
+      --border-radius: 16px;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    body {
+      background: linear-gradient(135deg, #e0f7fa, #f1f8e9);
+      color: var(--dark);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* Header Styles */
+    header {
+      text-align: center;
+      padding: 40px 20px 20px;
+      background: linear-gradient(145deg, #00695C, #0288D1);
+      border-radius: 0 0 var(--border-radius) var(--border-radius);
+      color: white;
+      margin-bottom: 40px;
+      box-shadow: var(--shadow);
+    }
+
+    .logo-container {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 90px;
+      height: 90px;
+      background: white;
+      border-radius: 50%;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .logo-container i {
+      font-size: 3rem;
+      color: var(--primary);
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 15px;
+      font-weight: 700;
+    }
+
+    .subtitle {
+      font-size: 1.4rem;
+      max-width: 700px;
+      margin: 0 auto 20px;
+      opacity: 0.9;
+    }
+
+    /* Calculator Cards */
+    .calculators-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 30px;
+      margin-bottom: 50px;
+    }
+
+    .calculator-card {
+      background: white;
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .calculator-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .card-header {
+      padding: 25px;
+      background: linear-gradient(to right, var(--primary), var(--secondary));
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .card-header i {
+      font-size: 2.2rem;
+    }
+
+    .card-header h2 {
+      font-size: 1.8rem;
+      font-weight: 600;
+    }
+
+    .card-content {
+      padding: 25px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-content p {
+      margin-bottom: 25px;
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: var(--dark);
+      flex: 1;
+    }
+
+    .features-list {
+      margin-bottom: 25px;
+      padding-left: 20px;
+    }
+
+    .features-list li {
+      margin-bottom: 12px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .features-list li i {
+      color: var(--primary);
+      margin-top: 4px;
+    }
+
+    .calculator-link {
+      display: block;
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      text-align: center;
+      text-decoration: none;
+      border-radius: var(--border-radius);
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: var(--transition);
+      margin-top: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .calculator-link:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 7px 15px rgba(0, 105, 92, 0.3);
+    }
+
+    /* Benefits Section */
+    .benefits-section {
+      background: white;
+      border-radius: var(--border-radius);
+      padding: 40px;
+      box-shadow: var(--shadow);
+      margin-bottom: 50px;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 2.2rem;
+      color: var(--primary-dark);
+      margin-bottom: 40px;
+      position: relative;
+    }
+
+    .section-title:after {
+      content: '';
+      display: block;
+      width: 100px;
+      height: 4px;
+      background: linear-gradient(to right, var(--primary), var(--secondary));
+      margin: 15px auto 0;
+      border-radius: 2px;
+    }
+
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+
+    .benefit-card {
+      text-align: center;
+      padding: 30px 20px;
+      background: var(--light);
+      border-radius: var(--border-radius);
+      transition: var(--transition);
+    }
+
+    .benefit-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    }
+
+    .benefit-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      border-radius: 50%;
+      margin-bottom: 20px;
+      font-size: 2rem;
+    }
+
+    .benefit-card h3 {
+      font-size: 1.4rem;
+      color: var(--primary-dark);
+      margin-bottom: 15px;
+    }
+
+    .benefit-card p {
+      color: var(--gray);
+      line-height: 1.7;
+    }
+
+    /* Footer */
+    footer {
+      background: linear-gradient(to right, var(--primary-dark), var(--primary));
+      color: white;
+      padding: 40px 20px;
+      border-radius: var(--border-radius) var(--border-radius) 0 0;
+      text-align: center;
+    }
+
+    .footer-content {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .footer-logo {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      color: white;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin: 30px 0;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .footer-links a:hover {
+      color: var(--accent);
+      transform: translateY(-3px);
+    }
+
+    .copyright {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 900px) {
+      h1 {
+        font-size: 2.5rem;
+      }
+      
+      .subtitle {
+        font-size: 1.2rem;
+      }
+      
+      .calculators-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      header {
+        padding: 30px 15px;
+      }
+      
+      h1 {
+        font-size: 2rem;
+      }
+      
+      .card-header h2 {
+        font-size: 1.5rem;
+      }
+      
+      .benefits-section {
+        padding: 30px 20px;
+      }
+      
+      .section-title {
+        font-size: 1.8rem;
+      }
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .calculator-card {
+      animation: fadeIn 0.6s ease-out;
+    }
+    
+    .calculator-card:nth-child(1) { animation-delay: 0.1s; }
+    .calculator-card:nth-child(2) { animation-delay: 0.3s; }
+    .calculator-card:nth-child(3) { animation-delay: 0.5s; }
+    .benefit-card:nth-child(1) { animation-delay: 0.1s; }
+    .benefit-card:nth-child(2) { animation-delay: 0.3s; }
+    .benefit-card:nth-child(3) { animation-delay: 0.5s; }
+  </style>
+</head>
+<body>
+  <!-- Homepage -->
+  <header>
+    <div class="logo-container">
+      <i class="fas fa-calculator"></i>
+    </div>
+    <h1>Financial Calculators</h1>
+    <p class="subtitle">Powerful financial tools designed for Pakistani investors</p>
+  </header>
+  
+  <div class="container">
+    <div class="calculators-grid">
+      <!-- SIP Calculator Card -->
+      <div class="calculator-card">
+        <div class="card-header">
+          <i class="fas fa-chart-line"></i>
+          <h2>SIP Calculator</h2>
+        </div>
+        <div class="card-content">
+          <p>Plan your financial future with our advanced SIP calculator. Calculate potential returns on your systematic investments and visualize your wealth growth over time.</p>
+          
+          <ul class="features-list">
+            <li><i class="fas fa-check-circle"></i> Calculate SIP and lump sum investments</li>
+            <li><i class="fas fa-check-circle"></i> Visualize returns with interactive charts</li>
+            <li><i class="fas fa-check-circle"></i> Compare PKR and USD investments</li>
+            <li><i class="fas fa-check-circle"></i> Detailed investment breakdown</li>
+          </ul>
+          
+          <a href="sip_calculator.html" class="calculator-link">
+            <i class="fas fa-calculator"></i> Use SIP Calculator
+          </a>
+        </div>
+      </div>
+      
+      <!-- Inflation Calculator Card -->
+      <div class="calculator-card">
+        <div class="card-header">
+          <i class="fas fa-money-bill-wave"></i>
+          <h2>Inflation Calculator</h2>
+        </div>
+        <div class="card-content">
+          <p>Understand how inflation affects your money over time. Our inflation calculator uses Pakistan's historical data to show the real value of your money.</p>
+          
+          <ul class="features-list">
+            <li><i class="fas fa-check-circle"></i> Uses Pakistan's historical inflation data</li>
+            <li><i class="fas fa-check-circle"></i> Visualize inflation impact over decades</li>
+            <li><i class="fas fa-check-circle"></i> Compare depreciated vs inflation-adjusted values</li>
+            <li><i class="fas fa-check-circle"></i> Detailed yearly breakdown</li>
+          </ul>
+          
+          <a href="inflation_calculator.html" class="calculator-link">
+            <i class="fas fa-calculator"></i> Use Inflation Calculator
+          </a>
+        </div>
+      </div>
+      
+      <!-- Stock Trading Calculator Card -->
+      <div class="calculator-card">
+        <div class="card-header">
+          <i class="fas fa-chart-candlestick"></i>
+          <h2>Stock Trading Calculator</h2>
+        </div>
+        <div class="card-content">
+          <p>Calculate your stock trading profits accurately. Our calculator includes all fees and taxes to give you a clear picture of your net profit.</p>
+          
+          <ul class="features-list">
+            <li><i class="fas fa-check-circle"></i> Calculate buy and sell transactions</li>
+            <li><i class="fas fa-check-circle"></i> Includes all fees and taxes</li>
+            <li><i class="fas fa-check-circle"></i> Accurate profit/loss calculation</li>
+            <li><i class="fas fa-check-circle"></i> Detailed cost breakdown</li>
+          </ul>
+          
+          <a href="stock_calculator.html" class="calculator-link">
+            <i class="fas fa-calculator"></i> Use Stock Calculator
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Benefits Section -->
+    <div class="benefits-section">
+      <h2 class="section-title">Why Use Our Financial Calculators?</h2>
+      
+      <div class="benefits-grid">
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <i class="fas fa-shield-alt"></i>
+          </div>
+          <h3>Accurate Calculations</h3>
+          <p>Our calculators use precise financial formulas and Pakistan-specific data to give you reliable results for your financial planning.</p>
+        </div>
+        
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <i class="fas fa-rupee-sign"></i>
+          </div>
+          <h3>Pakistan Focused</h3>
+          <p>Designed specifically for Pakistani investors with local currency support and relevant economic data.</p>
+        </div>
+        
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <i class="fas fa-lock"></i>
+          </div>
+          <h3>Privacy First</h3>
+          <p>All calculations happen in your browser. Your financial data never leaves your computer and is not stored anywhere.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer>
+    <div class="footer-content">
+      <div class="footer-links">
+        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+        <a href="sip_calculator.html"><i class="fas fa-chart-line"></i> SIP Calculator</a>
+        <a href="inflation_calculator.html"><i class="fas fa-money-bill-wave"></i> Inflation Calculator</a>
+        <a href="stock_calculator.html"><i class="fas fa-chart-candlestick"></i> Stock Calculator</a>
+      </div>
+      
+      <div class="copyright">
+        <p>© 2023 Financial Calculators Pakistan. All rights reserved.</p>
+        <p>Designed with <i class="fas fa-heart" style="color: #ff5252;"></i> for Pakistani Investors</p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
